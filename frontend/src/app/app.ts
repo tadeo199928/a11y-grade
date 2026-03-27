@@ -1,31 +1,22 @@
-import { Component } from '@angular/core';
-import { UploadComponent } from './components/upload/upload';
-import { AnalysisResult } from './services/analyze.service';
-import { ResultsComponent } from './components/results/results';
+import { Component, inject } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
 import { NavComponent } from './components/nav/nav';
 import { FooterComponent } from './components/footer/footer';
+import { AnalysisStateService } from './services/analysis-state.server.ts';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [UploadComponent, ResultsComponent, NavComponent, FooterComponent],
+  imports: [ NavComponent, FooterComponent, RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
 export class AppComponent {
-  result: AnalysisResult | null = null;
-  fileName = '';
-  imageDataUrl = '';
+  private readonly router = inject(Router);
+  protected readonly analysisState = inject(AnalysisStateService);
 
-  onAnalysisComplete(data: { result: AnalysisResult; fileName: string; imageDataUrl: string }) {
-    this.result = data.result;
-    this.fileName = data.fileName;
-    this.imageDataUrl = data.imageDataUrl;
-  }
-
-  goBack() {
-    this.result = null;
-    this.fileName = '';
-    this.imageDataUrl = '';
+  goHome() {
+    this.analysisState.clearSnapshot();
+    void this.router.navigate(['/']);
   }
 }

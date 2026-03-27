@@ -1,5 +1,6 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { AnalysisResult } from '../../services/analyze.service';
+import { Component, computed, effect, inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { AnalysisStateService } from '../../services/analysis-state.server.ts';
 
 @Component({
   selector: 'app-results',
@@ -9,10 +10,18 @@ import { AnalysisResult } from '../../services/analyze.service';
   styleUrl: './results.scss',
 })
 export class ResultsComponent {
-  @Input() result!: AnalysisResult;
-  @Input() fileName = '';
-  @Input() imageDataUrl = '';
-  @Output() back = new EventEmitter<void>();
+  private readonly router = inject(Router);
+  private readonly analysisState = inject(AnalysisStateService);
+
+  protected readonly snapshot = computed(() => this.analysisState.snapshot());
+
+  constructor() {
+    effect(() => {
+      if (!this.snapshot()) {
+        void this.router.navigate(['/']);
+      }
+    });
+  }
 
   get grade(): string {
     const s = this.result.score;
@@ -39,7 +48,17 @@ export class ResultsComponent {
     return this.result.issues.length.toString().padStart(2, '0');
   }
 
+  get result() {
+    return this.snapshot()?.result ?? {
+      score: 0,
+      summary: '',
+      good_areas: [],
+      issues: [],
+    };
+  }
+
   goBack() {
-    this.back.emit();
+    this.analysisState.clearSnapshot();
+    void this.router.navigate(['/']);
   }
 }

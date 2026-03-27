@@ -1,23 +1,22 @@
-import { Component, Output, EventEmitter } from '@angular/core';
-import { AnalyzeService, AnalysisResult } from '../../services/analyze.service';
+import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { AnalyzeService } from '../../services/analyze.service';
+import { AnalysisStateService } from '../../services/analysis-state.server.ts';
 
 @Component({
   selector: 'app-upload',
+  standalone: true,
   imports: [],
   templateUrl: './upload.html',
   styleUrl: './upload.scss',
 })
 export class UploadComponent {
+  private readonly analyzeService = inject(AnalyzeService);
+  private readonly analysisState = inject(AnalysisStateService);
+  private readonly router = inject(Router);
+
   isLoading = false;
   isDragging = false;
-
-  @Output() analysisComplete = new EventEmitter<{
-    result: AnalysisResult;
-    fileName: string;
-    imageDataUrl: string;
-  }>();
-
-  constructor(private analyzeService: AnalyzeService) {}
 
   onDragOver(event: DragEvent) {
     event.preventDefault();
@@ -67,11 +66,12 @@ export class UploadComponent {
         next: (response) => {
           const result = this.analyzeService.parseResult(response);
           this.isLoading = false;
-          this.analysisComplete.emit({
+          this.analysisState.setSnapshot({
             result,
             fileName: file.name,
             imageDataUrl: dataUrl,
           });
+          void this.router.navigate(['/results']);
         },
         error: () => {
           this.isLoading = false;

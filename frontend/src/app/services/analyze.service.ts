@@ -38,14 +38,14 @@ export class AnalyzeService {
 
   private tryModel(base64Image: string, index: number): Observable<OpenRouterResponse> {
     if (index >= this.MODELS.length) {
-      throw new Error('Todos los modelos fallaron');
+      throw new Error('All models failed to analyze the image');
     }
 
-    console.log(`Intentando con: ${this.MODELS[index]}`);
+    console.log(`Trying model: ${this.MODELS[index]}`);
 
     return this.callModel(base64Image, this.MODELS[index]).pipe(
       catchError(() => {
-        console.warn(`${this.MODELS[index]} falló, probando siguiente...`);
+        console.warn(`${this.MODELS[index]} failed, trying next...`);
         return this.tryModel(base64Image, index + 1);
       })
     );
@@ -119,9 +119,9 @@ export class AnalyzeService {
     } catch {
       return {
         score: 0,
-        summary: 'Error al procesar la respuesta',
-        good_areas: ['No se pudo analizar la imagen'],
-        issues: ['No se pudo analizar la imagen']
+        summary: 'Error processing the response',
+        good_areas: ['Could not analyze the image'],
+        issues: ['Could not analyze the image']
       };
     }
   }

@@ -1,18 +1,30 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { of } from 'rxjs';
 
-import { Upload } from './upload';
+import { UploadComponent } from './upload';
+import { AnalyzeService } from '../../services/analyze.service';
 
-describe('Upload', () => {
-  let component: Upload;
-  let fixture: ComponentFixture<Upload>;
+describe('UploadComponent', () => {
+  let component: UploadComponent;
+  let fixture: ComponentFixture<UploadComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Upload]
+      imports: [UploadComponent, RouterTestingModule],
+      providers: [
+        {
+          provide: AnalyzeService,
+          useValue: {
+            analyze: () => of({ choices: [{ message: { content: '{"score":100,"summary":"ok","good_areas":[],"issues":[]}' } }] }),
+            parseResult: () => ({ score: 100, summary: 'ok', good_areas: [], issues: [] }),
+          },
+        },
+      ],
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Upload);
+    fixture = TestBed.createComponent(UploadComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

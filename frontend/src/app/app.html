@@ -1,15 +1,7 @@
-<app-nav [hasResult]="!!result" (goDashboard)="goBack()"></app-nav>
+<app-nav [hasResult]="!!analysisState.snapshot()" (goDashboard)="goHome()"></app-nav>
 
 <main class="app-main">
-  @if (result) {
-    <app-results
-      [result]="result"
-      [fileName]="fileName"
-      [imageDataUrl]="imageDataUrl"
-      (back)="goBack()" />
-  } @else {
-    <app-upload (analysisComplete)="onAnalysisComplete($event)" />
-  }
+  <router-outlet></router-outlet>
 </main>
 
 <app-footer></app-footer>
