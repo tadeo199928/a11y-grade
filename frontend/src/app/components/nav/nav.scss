@@ -1,0 +1,86 @@
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  height: 64px;
+  background: rgba(10, 10, 15, 0.8);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  .logo {
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: -0.02em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+
+    .nav-link {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: color 0.2s;
+
+      &:hover {
+        color: var(--text-primary);
+      }
+
+      &.active {
+        color: var(--text-primary);
+        font-weight: 500;
+      }
+    }
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .btn-sign-in {
+    padding: 0.5rem 1.25rem;
+    background: transparent;
+    border: 1px solid var(--primary);
+    color: var(--text-primary);
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    transition: all 0.2s;
+
+    &:hover {
+      background: rgba(92, 107, 192, 0.15);
+    }
+  }
+
+  .btn-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid var(--border-light);
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 900px) {
+  .app-header {
+    padding: 0 1rem;
+
+    .nav-links {
+      gap: 1rem;
+
+      .nav-link {
+        font-size: 0.8rem;
+      }
+    }
+  }
+}

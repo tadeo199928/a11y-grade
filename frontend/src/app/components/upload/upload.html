@@ -1,0 +1,59 @@
+<section class="hero">
+  <span class="badge">AI-POWERED COMPLIANCE</span>
+  <h1 class="hero-title">
+    Check your web
+    <br>
+    <span class="highlight">accessibility</span> with AI
+  </h1>
+  <p class="hero-subtitle">
+    Instantly identify WCAG violations and optimization opportunities by<br>
+    dragging your interface screenshots here.
+  </p>
+</section>
+
+<section
+  class="drop-zone"
+  [class.dragging]="isDragging"
+  [class.loading]="isLoading"
+  (dragover)="onDragOver($event)"
+  (dragleave)="onDragLeave($event)"
+  (drop)="onDrop($event)">
+
+  @if (isLoading) {
+    <div class="loading-state">
+      <div class="spinner">
+        <div class="spinner-ring"></div>
+        <div class="spinner-ring inner"></div>
+      </div>
+      <p class="loading-text">Analyzing your screenshot...</p>
+      <p class="loading-sub">Our AI is scanning for WCAG compliance issues</p>
+    </div>
+  } @else {
+    <div class="upload-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <polyline points="17 8 12 3 7 8"/>
+        <line x1="12" y1="3" x2="12" y2="15"/>
+      </svg>
+    </div>
+    <p class="drop-text">Drop your screenshot here</p>
+    <p class="file-info">PNG or JPG up to 10MB</p>
+    <button class="browse-btn" (click)="triggerFileInput(fileInput)">Browse Files</button>
+    <input #fileInput type="file" accept="image/png,image/jpeg" (change)="onFileSelected($event)" hidden />
+  }
+</section>
+
+<section class="features">
+  <div class="feature">
+    <span class="dot green"></span>
+    <span>WCAG 2.1 COMPLIANT</span>
+  </div>
+  <div class="feature">
+    <span class="dot purple"></span>
+    <span>INSTANT ANALYSIS</span>
+  </div>
+  <div class="feature">
+    <span class="dot red"></span>
+    <span>SECURE &amp; PRIVATE</span>
+  </div>
+</section>

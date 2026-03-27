@@ -1,0 +1,21 @@
+<header class="app-header">
+  <a class="logo">A11Y-GRADE</a>
+
+  <nav class="nav-links">
+    @if (!hasResult) {
+      <a class="nav-link active">Home</a>
+      <a class="nav-link">Documentation</a>
+      <a class="nav-link">Support</a>
+    } @else {
+      <a class="nav-link" (click)="onGoDashboard()">Dashboard</a>
+      <a class="nav-link active">Audit Results</a>
+      <a class="nav-link">History</a>
+      <a class="nav-link">Settings</a>
+    }
+  </nav>
+
+  <div class="header-actions">
+      <button class="btn-sign-in">Sign In</button>
+    
+  </div>
+</header>

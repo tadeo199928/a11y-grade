@@ -1,0 +1,75 @@
+<section class="results-container">
+  <div class="analysis-header">
+    <div class="target-info">
+      <span class="label">ANALYSIS TARGET</span>
+      <h2 class="filename">{{ fileName }}</h2>
+    </div>
+  </div>
+
+  <div class="results-grid">
+    <div class="left-col">
+      <div class="preview-card">
+        <img [src]="imageDataUrl" [alt]="fileName" />
+      </div>
+      <div class="summary-card">
+        <div class="summary-icon">i</div>
+        <p>{{ result.summary }}</p>
+      </div>
+    </div>
+
+    <div class="right-col">
+      <div class="score-row">
+        <div class="score-card">
+          <span class="score-label">A11Y SCORE</span>
+          <div class="score-value">
+            <span class="score-number">{{ result.score }}</span>
+            <span class="score-total">/100</span>
+          </div>
+          <span class="grade-badge" [class]="gradeClass">● GRADE: {{ grade }}</span>
+        </div>
+        <div class="stats-col">
+          <div class="stat-card">
+            <span class="stat-label">Good Areas</span>
+            <span class="stat-value secondary">{{ goodAreasCount }}</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Issues Found</span>
+            <span class="stat-value danger">{{ issuesCount }}</span>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-title">Good Areas</h3>
+      @for (area of result.good_areas; track area) {
+        <div class="issue-card good-card">
+          <div class="issue-content">
+            <div class="issue-header">
+              <span class="issue-icon good">✓</span>
+              <h4>{{ area }}</h4>
+              <span class="badge-tag good">GOOD</span>
+            </div>
+          </div>
+        </div>
+      }
+
+      <h3 class="section-title">Identified Issues</h3>
+      @for (issue of result.issues; track issue) {
+        <div class="issue-card">
+          <div class="issue-content">
+            <div class="issue-header">
+              <span class="issue-icon critical">✕</span>
+              <h4>{{ issue }}</h4>
+              <span class="badge-tag critical">ISSUE</span>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="actions-row">
+    <button class="btn-primary" (click)="goBack()">
+      <span>↻</span> Analyze Another
+    </button>
+  </div>
+</section>
