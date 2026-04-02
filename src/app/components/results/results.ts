@@ -1,6 +1,6 @@
 import { Component, computed, effect, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { AnalysisStateService } from '../../services/analysis-state.server.ts';
+import { AnalysisStateService } from '../../services/analysis-state.server.ts.js';
 
 @Component({
   selector: 'app-results',

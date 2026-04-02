@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AnalysisStateService } from './analysis-state.server.ts';
+import { AnalysisStateService } from './analysis-state.server.ts.js';
 
 describe('AnalysisStateService', () => {
   let service: AnalysisStateService;
